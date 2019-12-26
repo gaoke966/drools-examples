@@ -5,7 +5,7 @@ import com.neo.drools.model.State;
 import com.neo.drools.model.fact.AddressCheckResult;
 import com.neo.drools.action.TestAction;
 
-rule "Postcode should be filled with exactly 5 numbers"
+rule "Postcode should be filled with exactly 6 numbers"
     when
         address : Address(postcode != null, postcode matches "([0-9]{6})")
         state : State(name == address.state)
