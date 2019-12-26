@@ -1,6 +1,7 @@
 package com.neo.drools.controller;
 
 import com.neo.drools.model.Address;
+import com.neo.drools.model.State;
 import com.neo.drools.model.fact.AddressCheckResult;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -20,14 +21,17 @@ public class TestController {
 
     @ResponseBody
     @RequestMapping("/address")
-    public void test(int num){
+    public void test(int postcode){
         Address address = new Address();
-        address.setPostcode(generateRandom(num));
+        address.setPostcode(postcode+"");
+        address.setState("北京");
         KieSession kieSession = kieContainer.newKieSession();
-
+        State state = new State();
+        state.setName("北京");
         AddressCheckResult result = new AddressCheckResult();
         kieSession.insert(address);
         kieSession.insert(result);
+        kieSession.insert(state);
         int ruleFiredCount = kieSession.fireAllRules();
         kieSession.destroy();
         System.out.println("触发了" + ruleFiredCount + "条规则");
